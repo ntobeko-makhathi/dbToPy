@@ -18,6 +18,24 @@ if result:
     for db in result:
         print(f"Customer number: {db[0]}, \nFirst Name: {db[1]}, \nLast Name: {db[2]}, \nPhysical Address: \n\t{db[3]},\n\t{db[4]},\n\t{db[5]},\n\t{db[6]},\n\t{db[7]}, \nDate of Birth: {db[8]}")
 else:
-    print("No user found with that name.")
+    print("No records found for the given name.")
+
+    record = input("Would you like to add a new record? (yes/no): ")
+    if record.lower() == "yes":
+        first_name = input("Enter First Name: ")
+        last_name = input("Enter Last Name: ")
+        address_line1 = input("Enter Address Line 1: ")
+        address_line2 = input("Enter Address Line 2: ")
+        city = input("Enter City: ")
+        province = input("Enter Province: ")
+        postal_code = input("Enter Postal Code: ")
+        date_of_birth = input("Enter Date of Birth (YYYY-MM-DD): ")
+
+        sql = "INSERT INTO user (FirstName, LastName, Street, Suburb, City, Province, PostalCode, DOB) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        val = (first_name, last_name, address_line1, address_line2, city, province, postal_code, date_of_birth)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        print(f"Record added successfully. Customer number: {mycursor.lastrowid}")
+
 
 print("Thank you for using our service.")
